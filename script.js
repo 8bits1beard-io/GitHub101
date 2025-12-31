@@ -1859,7 +1859,7 @@ function navigateToSection(sectionName) {
 }
 
 function updateNavigationButtons() {
-    const prevBtn = document.getElementById('prevBtn');
+    const prevBtn = document.getElementById('prevSectionBtn');
     const nextBtn = document.getElementById('nextBtn');
     
     prevBtn.disabled = currentSection === 0;
@@ -4717,7 +4717,7 @@ function updateProgress() {
 }
 
 function updateNavigationButtons() {
-    const prevBtn = document.getElementById('prevBtn');
+    const prevBtn = document.getElementById('prevQuestionBtn');
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
     
@@ -4876,6 +4876,18 @@ function retakeQuiz() {
     document.getElementById('quizIntro').scrollIntoView({ behavior: 'smooth' });
 }
 
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function(char) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[char];
+    });
+}
+
 function generateCertificate() {
     const studentNameElement = document.getElementById('studentName');
     const studentName = studentNameElement ? studentNameElement.value.trim() : '';
@@ -4908,6 +4920,7 @@ function generateCertificate() {
         day: 'numeric' 
     });
     const isPerfectScore = finalQuizScore === 100;
+    const safeName = escapeHtml(studentName);
     
     // Create HTML certificate display matching the PDF version
     const certificateHTML = `
@@ -4934,7 +4947,7 @@ function generateCertificate() {
                 
                 <div class="presented-to">Presented to</div>
                 
-                <div class="name">${studentName}</div>
+                <div class="name">${safeName}</div>
                 
                 <div class="achievement">
                     for successful completion of the <strong>GitHub 101 Fundamentals</strong> training program.
@@ -4968,12 +4981,24 @@ function generateCertificate() {
         <p>You have successfully completed GitHub 101!</p>
         ${certificateHTML}
         <div style="margin-top: 2rem; text-align: center;">
-            <button class="btn btn-primary" onclick="downloadCertificateAsPDF('${studentName}')">
+            <button class="btn btn-primary" id="downloadCertificateBtn">
                 📄 Download Certificate as PDF
             </button>
-            <button class="btn btn-secondary" onclick="resetQuiz()" style="margin-left: 1rem;">Take Quiz Again</button>
+            <button class="btn btn-secondary" id="retakeQuizBtn" style="margin-left: 1rem;">Take Quiz Again</button>
         </div>
     `;
+
+    const downloadBtn = document.getElementById('downloadCertificateBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            downloadCertificateAsPDF(studentName);
+        });
+    }
+
+    const retakeBtn = document.getElementById('retakeQuizBtn');
+    if (retakeBtn) {
+        retakeBtn.addEventListener('click', resetQuiz);
+    }
     
     console.log('Certificate displayed successfully for:', studentName, 'Score:', finalQuizScore);
     }, 800); // Close setTimeout for loading simulation
@@ -4987,9 +5012,14 @@ function downloadCertificateAsPDF(studentName) {
     });
     
     const isPerfectScore = finalQuizScore === 100;
+    const safeName = escapeHtml(studentName);
     
     // Create a new window with a printable certificate
     const printWindow = window.open('', '_blank', 'width=800,height=600');
+    if (!printWindow) {
+        alert('Pop-up blocked. Please allow pop-ups to download the certificate.');
+        return;
+    }
     
     printWindow.document.write(`
         <!DOCTYPE html>
@@ -4997,7 +5027,7 @@ function downloadCertificateAsPDF(studentName) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>GitHub 101 Certificate - ${studentName}</title>
+            <title>GitHub 101 Certificate - ${safeName}</title>
             <style>
                 @page {
                     size: 11in 8.5in;
@@ -5398,7 +5428,7 @@ function downloadCertificateAsPDF(studentName) {
                     
                     <div class="presented-to">Presented to</div>
                     
-                    <div class="name">${studentName}</div>
+                <div class="name">${safeName}</div>
                     
                     <div class="achievement">
                         for successful completion of the <strong>GitHub 101 Fundamentals</strong> training program.

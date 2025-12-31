@@ -21,7 +21,7 @@ An interactive, comprehensive training platform designed to teach Git and GitHub
 - **🎯 Adaptive Learning**: Smart question randomization and targeted remediation
 
 ### Modern Web Experience
-- **📱 Progressive Web App**: Installable on mobile and desktop devices for offline access
+- **📱 Progressive Web App**: Installable on mobile and desktop devices for an app-like experience (network required for CDN assets)
 - **⚡ Performance Optimized**: Sub-second load times with resource hints and lazy loading
 - **🌐 SEO Optimized**: Enhanced discoverability with structured data and meta tags
 - **🔄 Loading States**: Professional loading indicators for better user experience
@@ -84,7 +84,7 @@ An interactive, comprehensive training platform designed to teach Git and GitHub
 ## 💻 Technical Specifications
 
 ### Performance & Optimization
-- **Progressive Web App**: Installable with offline capabilities and app-like experience
+- **Progressive Web App**: Installable for an app-like experience; offline use depends on cached assets
 - **Performance Optimized**: Resource hints, lazy loading, and script deferral for fast load times
 - **Mobile-First Design**: Responsive layouts with touch-friendly interfaces
 - **Intersection Observer**: Lazy content loading for improved performance
@@ -110,13 +110,13 @@ An interactive, comprehensive training platform designed to teach Git and GitHub
 - **Browser**: Modern web browser with PWA support (Chrome 90+, Edge 90+, Firefox 85+, Safari 14+)
 - **JavaScript**: Enabled for interactive functionality and assessments
 - **Network**: Internet access for CDN resources (fonts, syntax highlighting)
-- **Storage**: ~2MB local storage for progress tracking and offline capabilities
+- **Storage**: ~2MB local storage for progress tracking and cached assets
 
 ### Recommended Environment
 - **Display**: 1920x1080 or higher resolution for optimal desktop viewing
 - **Mobile**: 375px+ width for mobile optimization (iPhone 6+ equivalent)
 - **Memory**: 4GB RAM for smooth interactive performance and PWA functionality
-- **Network**: Stable connection for initial load, offline capable after first visit
+- **Network**: Stable connection for initial load; offline use not guaranteed without cached assets
 - **Accessibility**: Screen reader compatibility (NVDA, JAWS, VoiceOver supported)
 
 ## 📁 Project Structure
